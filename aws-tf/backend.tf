@@ -1,10 +1,10 @@
-terraform { 
-  cloud { 
-    
-    organization = "james-leatherman" 
+terraform {
+  cloud {
 
-    workspaces { 
-      name = "ecs" 
-    } 
-  } 
+    organization = "james-leatherman"
+
+    workspaces {
+      name = "ecs"
+    }
+  }
 }
