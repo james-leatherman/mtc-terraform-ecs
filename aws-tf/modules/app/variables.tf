@@ -53,3 +53,13 @@ variable "vpc_id" {
   description = "The ID of the VPC"
   type        = string
 }
+
+variable "alb_listener_arn" {
+  description = "The ARN of the ALB listener"
+  type        = string
+}
+
+variable "path_pattern" {
+  description = "The path pattern to match"
+  type        = string
+}
