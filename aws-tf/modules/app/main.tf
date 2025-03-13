@@ -40,3 +40,56 @@ resource "terraform_data" "push" {
     EOT
   }
 }
+
+resource "aws_ecs_task_definition" "this" {
+  family                   = "${var.app_name}-task"
+  requires_compatibilities = ["FARGATE"]
+  network_mode             = "awsvpc"
+  cpu                      = "256"
+  memory                   = "512"
+  execution_role_arn       = var.execution_role_arn
+  container_definitions = jsonencode([
+    {
+      name      = var.app_name
+      image     = "${local.ecr_url}:latest"
+      cpu       = 256
+      memory    = 512
+      essential = true
+      portMappings = [
+        {
+          containerPort = var.port
+          hostPort      = var.port
+        }
+      ]
+    }
+  ])
+}
+
+resource "aws_ecs_service" "this" {
+  name            = "${var.app_name}-service"
+  cluster         = var.cluster_arn
+  task_definition = aws_ecs_task_definition.this.arn
+  desired_count   = 1
+  launch_type     = "FARGATE"
+
+  network_configuration {
+    subnets          = var.subnets
+    security_groups  = [var.app_security_group_id]
+    assign_public_ip = var.is_public
+  }
+
+  load_balancer {
+    target_group_arn = aws_lb_target_group.this.arn
+    container_name   = var.app_name
+    container_port   = var.port
+  }
+}
+
+resource "aws_lb_target_group" "this" {
+  name        = "${var.app_name}-tg"
+  port        = var.port
+  protocol    = "HTTP"
+  target_type = "ip"
+  vpc_id      = var.vpc_id
+}
+
