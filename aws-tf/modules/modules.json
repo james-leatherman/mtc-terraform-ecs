@@ -1,1 +1,14 @@
-{"Modules":[{"Key":"","Source":"","Dir":"."},{"Key":"infra","Source":"./modules/infra","Dir":""}]}
+{
+    "Modules": [
+        {
+            "Key": "",
+            "Source": "",
+            "Dir": "."
+        },
+        {
+            "Key": "infra",
+            "Source": "./modules/infra",
+            "Dir": ""
+        }
+    ]
+}

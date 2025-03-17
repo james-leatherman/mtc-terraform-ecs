@@ -9,23 +9,23 @@ terraform {
   }
 }
 
-provider "aws" {
-  region = "us-east-1"
-}
+# provider "aws" {
+#   region = "us-east-1"
+# }
 
-locals {
-  buckets = {
-    "dev"  = "mtc-app-state-leatherman"
-    "prod" = "mtc-app-state-leatherman-2"
-  }
-}
+# locals {
+#   buckets = {
+#     "dev"  = "mtc-app-state-leatherman"
+#     "prod" = "mtc-app-state-leatherman-2"
+#   }
+# }
 
-import {
-  for_each = local.buckets
-  to       = aws_s3_bucket.this[each.key]
-  id       = each.value
-}
+# import {
+#   for_each = local.buckets
+#   to       = aws_s3_bucket.this[each.key]
+#   id       = each.value
+# }
 
-resource "aws_s3_bucket" "this" {
-  for_each = local.buckets
-}
+# resource "aws_s3_bucket" "this" {
+#   for_each = local.buckets
+# }
