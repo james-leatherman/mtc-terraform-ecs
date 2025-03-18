@@ -63,3 +63,9 @@ variable "path_pattern" {
   description = "The path pattern to match"
   type        = string
 }
+
+variable "healthcheck_path" {
+  description = "The path to use for health checks"
+  type        = string
+  default     = "/*"
+}

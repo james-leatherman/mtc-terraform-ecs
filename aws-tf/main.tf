@@ -1,12 +1,5 @@
 # Root Main.tf
 
-module "infra" {
-  source      = "./modules/infra"
-  vpc_cidr    = "10.0.0.0/16"
-  num_subnets = 7
-  allowed_ips = ["96.248.41.102/32"]
-}
-
 locals {
   apps = {
     ui = {
@@ -17,23 +10,37 @@ locals {
       port                = 80
       is_public           = true
       path_pattern        = "/*"
+      healthcheck_path    = "/*"
     }
-    api = {
-      ecr_repository_name = "api"
-      app_path            = "api"
-      image_version       = "1.0.1"
-      app_name            = "api"
-      port                = 3000
-      is_public           = false
-      path_pattern        = "/api/*"
-    }
+    # api = {
+    #   ecr_repository_name = "api"
+    #   app_path            = "api"
+    #   image_version       = "1.0.1"
+    #   app_name            = "api"
+    #   port                = 3000
+    #   is_public           = false
+    #   path_pattern        = "/api/*"
+    #   healthcheck_path    = "/api/heathcheck"
+    # }
   }
+}
 
+module "infra" {
+  source      = "./modules/infra"
+  vpc_cidr    = "10.0.0.0/16"
+  num_subnets = 3
+  allowed_ips = ["96.248.41.102/32"]
+}
+
+resource "local_file" "dockerfile" {
+  content  = templatefile("modules/app/apps/templates/ui.tftpl", { build_args = { "backend_url" = module.infra.alb_dns_name } })
+  filename = "modules/app/apps/ui/Dockerfile"
 }
 
 module "app" {
   source                = "./modules/app"
   for_each              = local.apps
+  depends_on            = [local_file.dockerfile]
   ecr_repository_name   = each.value.ecr_repository_name
   app_path              = each.value.app_path
   image_version         = each.value.image_version
@@ -47,4 +54,8 @@ module "app" {
   cluster_arn           = module.infra.cluster_arn
   vpc_id                = module.infra.vpc_id
   alb_listener_arn      = module.infra.alb_listener_arn
+}
+
+output "alb_dns_name" {
+  value = "http://${module.infra.alb_dns_name}"
 }
