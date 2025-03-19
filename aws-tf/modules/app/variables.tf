@@ -69,3 +69,18 @@ variable "healthcheck_path" {
   type        = string
   default     = "/*"
 }
+
+variable "envars" {
+  description = "The environment variables to set"
+  type        = list(map(any))
+}
+
+variable "secrets" {
+  description = "The secrets to use"
+  type        = list(map(any))
+}
+
+variable "lb_priority" {
+  description = "The priority of the listener rule"
+  type        = number
+}

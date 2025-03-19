@@ -1,0 +1,4 @@
+logging
+Flask
+Flask-Cors
+openai
