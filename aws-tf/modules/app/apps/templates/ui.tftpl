@@ -9,8 +9,7 @@ COPY script.js .
 ARG ${key}="${value}"
 %{ endfor }
 
-RUN sed -i "s|BACKEND_PLACEHOLDER|$${backend_url}|g" /usr/share/nginx/html/script.js
+RUN sed -i "s|BACKEND_PLACEHOLDER|http://$${backend_url}|g" /usr/share/nginx/html/script.js
 
 EXPOSE 80
-
 CMD ["nginx", "-g", "daemon off;"]

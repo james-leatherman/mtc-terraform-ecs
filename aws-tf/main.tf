@@ -1,7 +1,7 @@
 # Root Main.tf
 
 data "aws_secretsmanager_secret" "openai_api_key" {
-  name = "OPENAI_API_KEY"
+  name = "OPENAI_API_KEY_2"
 }
 
 locals {

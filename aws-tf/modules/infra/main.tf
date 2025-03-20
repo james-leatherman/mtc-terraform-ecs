@@ -114,7 +114,6 @@ resource "aws_iam_policy" "ecs_secrets_policy" {
   })
 }
 
-
 resource "aws_iam_role_policy_attachment" "ecs_execution_role_policy" {
   depends_on = [aws_iam_role.ecs_execution_role]
   role       = aws_iam_role.ecs_execution_role.name

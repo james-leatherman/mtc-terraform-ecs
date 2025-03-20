@@ -1,4 +1,3 @@
-iomport logging
 from flask import Flask, request, jsonify, Blueprint
 from flask_cors import CORS
 from openai import OpenAI
@@ -14,6 +13,7 @@ CORS(app, resources={"/api/*": {"origins": "*"}})
 
 # Retrieve the API key from the environment
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+    logger.info(OPENAI_API_KEY)
 if OPENAI_API_KEY:
     client = OpenAI(api_key=OPENAI_API_KEY)
 else:

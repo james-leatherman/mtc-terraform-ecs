@@ -57,7 +57,7 @@ resource "aws_ecs_task_definition" "this" {
       memory      = 512
       essential   = true
       environment = var.envars
-      sectets     = var.secrets
+      secrets     = var.secrets
       portMappings = [
         {
           containerPort = var.port
