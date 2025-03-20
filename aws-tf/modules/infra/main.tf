@@ -114,6 +114,25 @@ resource "aws_iam_policy" "ecs_secrets_policy" {
   })
 }
 
+resource "aws_iam_policy" "ecs_logs_policy" {
+  name        = "ecsLogsPolicy"
+  description = "Allow ECS tasks to write logs to CloudWatch"
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect   = "Allow"
+        Action   = [
+          "logs:CreateLogStream",
+          "logs:PutLogEvents",
+          "logs:CreateLogGroup"
+        ]
+        Resource = "*"
+      }
+    ]
+  })
+}
+
 resource "aws_iam_role_policy_attachment" "ecs_execution_role_policy" {
   depends_on = [aws_iam_role.ecs_execution_role]
   role       = aws_iam_role.ecs_execution_role.name
@@ -124,4 +143,10 @@ resource "aws_iam_role_policy_attachment" "ecs_secrets_policy_attachment" {
   depends_on = [aws_iam_role.ecs_execution_role, aws_iam_policy.ecs_secrets_policy]
   role       = aws_iam_role.ecs_execution_role.name
   policy_arn = aws_iam_policy.ecs_secrets_policy.arn
+}
+
+resource "aws_iam_role_policy_attachment" "ecs_logs_policy_attachment" {
+  depends_on = [aws_iam_role.ecs_execution_role, aws_iam_policy.ecs_logs_policy]
+  role       = aws_iam_role.ecs_execution_role.name
+  policy_arn = aws_iam_policy.ecs_logs_policy.arn
 }
