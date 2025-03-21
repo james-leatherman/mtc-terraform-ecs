@@ -26,7 +26,7 @@ OPENAI_API_KEY_2 = os.getenv("OPENAI_API_KEY_2")
 
 if OPENAI_API_KEY_2:
     client = OpenAI(api_key=OPENAI_API_KEY_2)
-    logger.info("OPENAI_API_KEY_2: %s", OPENAI_API_KEY_2)
+    # DEBUG # logger.info("OPENAI_API_KEY_2: %s", OPENAI_API_KEY_2)
 else:
     client = None
     logger.error("OPENAI_API_KEY_2 is not set. OpenAI client cannot be initialized.")

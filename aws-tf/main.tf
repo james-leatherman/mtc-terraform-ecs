@@ -1,11 +1,14 @@
 # Root Main.tf
 
+# Fetch the OpenAI API key from AWS Secrets Manager
 data "aws_secretsmanager_secret" "openai_api_key" {
   name = "OPENAI_API_KEY_2"
 }
 
+# Define local variables for application configurations
 locals {
   apps = {
+    # Configuration for the UI application
     ui = {
       ecr_repository_name = "ui"
       app_path            = "ui"
@@ -19,6 +22,7 @@ locals {
       envars              = [{}]
       secrets             = [{}]
     }
+    # Configuration for the API application
     api = {
       ecr_repository_name = "api"
       app_path            = "api"
@@ -35,6 +39,7 @@ locals {
   }
 }
 
+# Infrastructure module to create shared resources like VPC, subnets, and security groups
 module "infra" {
   source      = "./modules/infra"
   vpc_cidr    = "10.0.0.0/16"
@@ -42,11 +47,13 @@ module "infra" {
   allowed_ips = ["96.248.41.102/32"]
 }
 
+# Generate a Dockerfile for the UI application using a template
 resource "local_file" "dockerfile" {
   content  = templatefile("modules/app/apps/templates/ui.tftpl", { build_args = { "backend_url" = module.infra.alb_dns_name } })
   filename = "modules/app/apps/ui/Dockerfile"
 }
 
+# Application module to deploy the UI and API applications
 module "app" {
   source                = "./modules/app"
   for_each              = local.apps
@@ -70,6 +77,7 @@ module "app" {
   alb_listener_arn      = module.infra.alb_listener_arn
 }
 
+# Output the DNS name of the ALB for accessing the deployed applications
 output "alb_dns_name" {
   value = "http://${module.infra.alb_dns_name}"
 }
