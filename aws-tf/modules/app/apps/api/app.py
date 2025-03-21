@@ -41,7 +41,7 @@ def get_terraform_question():
             model="chatgpt-4o-latest",  # Or your preferred model
             messages=[
                 {"role": "system", "content": "You are a Terraform teacher responsible for Terraform class. You have access to Terraform documentation."},
-                {"role": "user", "content": "Provide a Terraform configuration trivia question and only the question. Create a set of 10 questions with answers and shuffle the order of the questions."},
+                {"role": "user", "content": "Provide a Terraform configuration trivia question and only the question."},
             ],
         )
         question = response.choices[0].message.content
@@ -64,7 +64,6 @@ def get_answer_feedback(question, answer):
                 {"role": "system", "content": "You are a Terraform teacher responsible for Terraform class. You have access to Terraform documentation."},
                 {"role": "user", "content": (
                     f"Provide correct/incorrect feedback for {prompt}"
-                    "Provide feedback for completely incorrect answers only, otherwise, just say 'Correct'. "
                     "Correctness is extremely important. Always err on the side of correctness."
                     "Provide examples where possible."
                     "If the answer is partially correct, provide the correct answer and explain the mistake."
@@ -81,10 +80,10 @@ def get_answer_feedback(question, answer):
 # Create a Blueprint for API routes with the prefix /api
 api_bp = Blueprint('api', __name__, url_prefix='/api')
 
-@api_bp.route('/healthcheck', methods=['GET'])
-def healthcheck():
-    """Simple healthcheck endpoint to verify that the service is running."""
-    return jsonify({"status": "ok"})
+# @api_bp.route('/healthcheck', methods=['GET'])
+# def healthcheck():
+#     """Simple healthcheck endpoint to verify that the service is running."""
+#     return jsonify({"status": "ok"})
 
 @api_bp.route('/question', methods=['GET'])
 def question_endpoint():

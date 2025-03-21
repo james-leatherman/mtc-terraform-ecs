@@ -30,7 +30,7 @@ locals {
       lb_priority         = 10
       healthcheck_path    = "/api/healthcheck"
       envars              = [{}]
-      secrets             = [{ name = "OPENAI_API_KEY", valueFrom = data.aws_secretsmanager_secret.openai_api_key.arn }]
+      secrets             = [{ name = "OPENAI_API_KEY_2", valueFrom = data.aws_secretsmanager_secret.openai_api_key.arn }]
     }
   }
 }
