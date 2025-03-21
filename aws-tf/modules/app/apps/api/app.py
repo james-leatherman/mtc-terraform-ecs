@@ -80,10 +80,10 @@ def get_answer_feedback(question, answer):
 # Create a Blueprint for API routes with the prefix /api
 api_bp = Blueprint('api', __name__, url_prefix='/api')
 
-# @api_bp.route('/healthcheck', methods=['GET'])
-# def healthcheck():
-#     """Simple healthcheck endpoint to verify that the service is running."""
-#     return jsonify({"status": "ok"})
+@api_bp.route('/healthcheck', methods=['GET'])
+def healthcheck():
+    """Simple healthcheck endpoint to verify that the service is running."""
+    return jsonify({"status": "ok"})
 
 @api_bp.route('/question', methods=['GET'])
 def question_endpoint():
