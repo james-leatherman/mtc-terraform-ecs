@@ -22,14 +22,14 @@ app = Flask(__name__)
 CORS(app, resources={"/api/*": {"origins": "*"}})
 
 # Retrieve the API key from the environment
-OPENAI_API_KEY_2 = os.getenv("OPENAI_API_KEY_2")
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
-if OPENAI_API_KEY_2:
-    client = OpenAI(api_key=OPENAI_API_KEY_2)
-    # DEBUG # logger.info("OPENAI_API_KEY_2: %s", OPENAI_API_KEY_2)
+if OPENAI_API_KEY:
+    client = OpenAI(api_key=OPENAI_API_KEY)
+    # DEBUG # logger.info("OPENAI_API_KEY: %s", OPENAI_API_KEY)
 else:
     client = None
-    logger.error("OPENAI_API_KEY_2 is not set. OpenAI client cannot be initialized.")
+    logger.error("OPENAI_API_KEY is not set. OpenAI client cannot be initialized.")
 
 def get_terraform_question():
     """Fetches a Terraform question from OpenAI API or returns a default message if the API key is missing."""

@@ -26,7 +26,7 @@ resource "terraform_data" "login" {
 
 // Build the Docker image for the application
 resource "terraform_data" "build" {
-  triggers_replace = [var.image_version] // Rebuild the image if the version changes
+  triggers_replace = [var.image_version]    // Rebuild the image if the version changes
   depends_on       = [terraform_data.login] // Ensure login happens before building
   provisioner "local-exec" {
     command = <<EOT
@@ -37,7 +37,7 @@ resource "terraform_data" "build" {
 
 // Push the Docker image to the ECR repository
 resource "terraform_data" "push" {
-  triggers_replace = [var.image_version] // Push the image if the version changes
+  triggers_replace = [var.image_version]    // Push the image if the version changes
   depends_on       = [terraform_data.build] // Ensure the image is built before pushing
   provisioner "local-exec" {
     command = <<EOT

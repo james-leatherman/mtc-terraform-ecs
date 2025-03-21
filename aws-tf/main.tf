@@ -1,9 +1,9 @@
 # Root Main.tf
 
-# Fetch the OpenAI API key from AWS Secrets Manager
-data "aws_secretsmanager_secret" "openai_api_key" {
-  name = "OPENAI_API_KEY_2"
-}
+# # Fetch the OpenAI API key from AWS Secrets Manager
+# data "aws_secretsmanager_secret" "openai_api_key" {
+#   name = "OPENAI_API_KEY"
+# }
 
 # Define local variables for application configurations
 locals {
@@ -34,9 +34,25 @@ locals {
       lb_priority         = 10
       healthcheck_path    = "/api/healthcheck"
       envars              = [{}]
-      secrets             = [{ name = "OPENAI_API_KEY_2", valueFrom = data.aws_secretsmanager_secret.openai_api_key.arn }]
+      secrets             = [{ name = "OPENAI_API_KEY", valueFrom = aws_secretsmanager_secret.openai_api_key.arn }]
     }
   }
+}
+
+variable "openai_api_key" {
+  description = "The OpenAI API key for authentication"
+  type        = string
+  sensitive   = true
+}
+
+resource "aws_secretsmanager_secret" "openai_api_key" {
+  name = "OPENAI_API_KEY_3"
+}
+
+resource "aws_secretsmanager_secret_version" "openai_api_key" {
+  secret_id                = aws_secretsmanager_secret.openai_api_key.id
+  secret_string_wo         = var.openai_api_key
+  secret_string_wo_version = 1
 }
 
 # Infrastructure module to create shared resources like VPC, subnets, and security groups
