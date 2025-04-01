@@ -1,6 +1,6 @@
 # mtc-terraform-ecs
 
-This project uses Terraform to manage infrastructure and deploy frontend and backend resources for an OpenAI enabled application on AWS ECS. It was built as part of the [More Than Certified](https://morethancertified.com/) course series. 
+This project uses Terraform to manage infrastructure and deploy frontend and backend resources for an OpenAI (chatgpt-4o-latest) enabled application on AWS ECS. It was built as part of the [More Than Certified](https://morethancertified.com/) course series. 
 
 The purpose of this project was to demonstrate how to use dynamic values to provide a configuration model for setting up AWS resources and containerized applications at scale. It uses the latest Terraform (v1.11.1) recommendations for ensuring forward compatibility with AWS provider (v5.91.0) configuration.
 
@@ -42,9 +42,9 @@ The `app` module is responsible for deploying applications to ECS, including bui
   - **app/**
     - **main.tf**
     - **variables.tf**
-    - **apps/**: Contains Dockerfiles for different applications.
-      - **api/Dockerfile**: hello-world
-      - **ui/Dockerfile**: nginx
+    - **apps/**:
+      - **api**: Trivia app in Flask
+      - **ui**: Javascript front end
 
   - **infra/**:
     - **main.tf**
@@ -52,10 +52,8 @@ The `app` module is responsible for deploying applications to ECS, including bui
     - **variables.tf**
     - **outputs.tf**
 
-- **providers.tf**: Specifies the required providers and version constraints.
+- **providers.tf**
 - **backend.tf**: Configures the backend for storing Terraform state. In this case, we pass in the selection from the `mgmt` module.
-- **dev.s3.tfbackend**: S3 bucket for dev state storage.
-- **prod.s3.tfbackend**: S3 bucket for prod state storage.
 
 ### mgmt Files
 
