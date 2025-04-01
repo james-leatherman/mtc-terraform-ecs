@@ -1,6 +1,8 @@
 # mtc-terraform-ecs
 
-This project uses Terraform to manage infrastructure and deploy applications on AWS ECS. It was built as part of the [More Than Certified](https://morethancertified.com/) course series. The purpose of this project was to demonstrate how to use dynamic values to provide a configuration model for setting up AWS resources and containerized applications at scale. It uses the latest Terraform (v1.11.1) recommendations for ensuring forward compatibility with AWS provider (v5.91.0) configuration.
+This project uses Terraform to manage infrastructure and deploy frontend and backend resources for an OpenAI enabled application on AWS ECS. It was built as part of the [More Than Certified](https://morethancertified.com/) course series. 
+
+The purpose of this project was to demonstrate how to use dynamic values to provide a configuration model for setting up AWS resources and containerized applications at scale. It uses the latest Terraform (v1.11.1) recommendations for ensuring forward compatibility with AWS provider (v5.91.0) configuration.
 
 ## Project Structure
 
