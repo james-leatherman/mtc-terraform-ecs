@@ -12,7 +12,7 @@ terraform {
 // Configure the AWS provider
 provider "aws" {
   // Set the AWS region where resources will be created
-  region = "us-east-1"
+  region = "us-west-2"
 
   // Define default tags to be applied to all AWS resources
   default_tags {

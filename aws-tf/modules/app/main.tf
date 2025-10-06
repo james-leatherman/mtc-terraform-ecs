@@ -76,7 +76,7 @@ resource "aws_ecs_task_definition" "this" {
         logDriver = "awslogs"
         options = {
           "awslogs-group"         = "ecs/mtc-logs",
-          "awslogs-region"        = "us-east-1",
+          "awslogs-region"        = "us-west-2",
           "awslogs-stream-prefix" = "mtc"
         }
       }

@@ -46,7 +46,7 @@ variable "openai_api_key" {
 }
 
 resource "aws_secretsmanager_secret" "openai_api_key" {
-  name = "OPENAI_API_KEY_3"
+  name = "OPENAI_API_KEY_4"
 }
 
 resource "aws_secretsmanager_secret_version" "openai_api_key" {
